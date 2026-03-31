@@ -8,6 +8,23 @@ public class TodoApp {
         ArrayList<TodoItem> todos = new ArrayList<>();
         int nextId = 1;
 
+        try (java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.FileReader("todo.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                int id = Integer.parseInt(parts[0]);
+                String title = parts[1];
+                boolean done = Boolean.parseBoolean(parts[2]);
+
+                TodoItem todo = new TodoItem(id, title);
+                if (done) todo.markDone();
+                todos.add(todo);
+            }
+            System.out.println("保存データを読み込みました。");
+        } catch (Exception e) {
+            System.out.println("保存データはありません。");
+        }
+
         while (true) {
             System.out.println("\n=== ToDo リスト ===");
             System.out.println("1. 追加");
@@ -15,7 +32,8 @@ public class TodoApp {
             System.out.println("3. 完了にする");
             System.out.println("4. 削除");
             System.out.println("5. 検索");
-            System.out.println("6. 終了");
+            System.out.println("6. 保存");
+            System.out.println("7. 終了");
             System.out.print("番号を選んでください: ");
 
             int choice = scanner.nextInt();
@@ -81,6 +99,16 @@ public class TodoApp {
                     if (!found) System.out.println("該当するToDoはありませんでした。");
                     break;
                 case 6:
+                    try (java.io.FileWriter writer = new java.io.FileWriter("todo.txt")) {
+                        for (TodoItem todo : todos) {
+                            writer.write(todo.getId() + "," + todo.getTitle() + "," + todo.isDone() + "\n");
+                        }
+                        System.out.println("保存しました。");
+                    } catch (Exception e) {
+                        System.out.println("保存中にエラーが発生しました: " + e.getMessage());
+                    }
+                    break;
+                case 7:
                     System.out.println("終了します。");
                     return;
                 default:
