@@ -14,7 +14,8 @@ public class TodoApp {
             System.out.println("2. 一覧表示");
             System.out.println("3. 完了にする");
             System.out.println("4. 削除");
-            System.out.println("5. 終了");
+            System.out.println("5. 検索");
+            System.out.println("6. 終了");
             System.out.print("番号を選んでください: ");
 
             int choice = scanner.nextInt();
@@ -65,6 +66,21 @@ public class TodoApp {
                     if (target == null) System.out.println("ID が見つかりませんでした。");
                     break;
                 case 5:
+                    System.out.println("検索ワードを入力してください: ");
+                    String keyword = scanner.nextLine();
+
+                    System.out.println("\n--- 検索結果 ---");
+                    boolean found = false;
+                    for (TodoItem todo : todos) {
+                        if (todo.getTitle().contains(keyword)) {
+                            System.out.println(todo);
+                            found = true;
+                        }
+                    }
+
+                    if (!found) System.out.println("該当するToDoはありませんでした。");
+                    break;
+                case 6:
                     System.out.println("終了します。");
                     return;
                 default:
