@@ -27,7 +27,7 @@ public class TodoItem {
 
     @Override
     public String toString() {
-        return (done ? "[完了]" : "未完了[") + id + ": " + title;
+        return (done ? "[完了]" : "[未完了]") + id + ": " + title;
     }
         
 
