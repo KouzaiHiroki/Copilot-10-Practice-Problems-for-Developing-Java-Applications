@@ -18,7 +18,7 @@ public class Janken {
             System.out.print("あなたの手を選んでください: ");
 
             int playerHand = scanner.nextInt();
-            int cpuHand = random.nextInt(3);
+            int cpuHand = cpuSmartHand(playerHand, random);
 
             System.out.println("あなた: " + handName(playerHand));
             System.out.println("CPU: " + handName(cpuHand));
@@ -61,6 +61,23 @@ public class Janken {
             return "あなたの勝ち!";
         } else {
             return "あなたの負け...";
+        }
+    }
+
+    public static int cpuSmartHand(int playerHand, Random random) {
+        int winHand;
+
+        //プレイヤーに勝つ手
+        switch (playerHand) {
+            case 0: winHand = 2; break;
+            case 1: winHand = 0; break;
+            case 2: winHand = 1; break;
+            default: winHand = random.nextInt(3);
+        }
+        if (random.nextInt(100) < 70) {
+            return winHand;
+        } else {
+            return random.nextInt(3);
         }
     }
 
