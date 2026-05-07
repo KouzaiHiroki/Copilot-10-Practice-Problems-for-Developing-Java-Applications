@@ -12,7 +12,9 @@ public class AddressBook {
             System.out.println("1. 登録");
             System.out.println("2. 一覧表示");
             System.out.println("3. 検索");
-            System.out.println("4. 終了");
+            System.out.println("4. 削除");
+            System.out.println("5. 編集");
+            System.out.println("6. 終了");
             System.out.print("番号を選んでください。");
 
             int choice = scanner.nextInt();
@@ -58,6 +60,66 @@ public class AddressBook {
                     
                     break;
                 case 4:
+                    System.out.print("削除するIDを入力してください。");
+                    int deleteId = scanner.nextInt();
+                    scanner.nextLine();
+
+                    Person personToDelete = null;
+
+                    for (Person person : people) {
+                        if (person.getId() == deleteId) {
+                            personToDelete = person;
+                            break;
+                        }
+                    }
+
+                    if (personToDelete != null) {
+                        people.remove(personToDelete);
+                        System.out.println("削除しました: " + personToDelete);
+                    } else {
+                        System.out.println("指定のIDが見つかりませんでした。");
+                    }
+                    break;
+                case 5:
+                    System.out.println("編集するIDを入力してください。");
+                    int editId = scanner.nextInt();
+                    scanner.nextLine();
+
+                    Person personToEdit = null;
+
+                    for (Person person : people) {
+                        if (person.getId() == editId) {
+                            personToEdit = person;
+                            break;
+                        }
+                    }
+
+                    if (personToEdit == null) {
+                        System.out.println("指定のIDが見つかりませんでした。");
+                        break;
+                    }
+
+                    System.out.println("現在の情報: " + personToEdit);
+
+                    System.out.print("新しい名前（空欄で変更なし）:");
+                    String newName = scanner.nextLine();
+                    if (!newName.isEmpty()) personToEdit.setName(newName);
+
+                    System.out.print("新しい電話番号（空欄で変更なし）:");
+                    String newPhone = scanner.nextLine();
+                    if (!newPhone.isEmpty()) personToEdit.setPhone(newPhone);
+
+                    System.out.print("新しいメールアドレス（空欄で変更なし）:");
+                    String newEmail = scanner.nextLine();
+                    if (!newEmail.isEmpty()) personToEdit.setEmail(newEmail);
+
+                    System.out.print("新しい住所（空欄で変更なし）:");
+                    String newAddress = scanner.nextLine();
+                    if (!newAddress.isEmpty()) personToEdit.setAddress(newAddress);
+
+                    System.out.println("更新しました: " + personToEdit);
+                    break;
+                case 6:
                     System.out.println("終了します。");
                     return;
                 default:
