@@ -7,6 +7,26 @@ public class AddressBook {
         ArrayList<Person> people = new ArrayList<>();
         int nextId = 1;
 
+        try (java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.FileReader("addressbook.csv"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+
+                int id = Integer.parseInt(parts[0]);
+                String name = parts[1];
+                String phone = parts[2];
+                String email = parts[3];
+                String address = parts[4];
+
+                Person personRegistered = new Person(id, name, phone, email, address);
+                people.add(personRegistered);
+                nextId = Math.max(nextId, id + 1);
+            }
+            System.out.println("保存データを読み込みました。");
+        } catch (Exception exception) {
+            System.out.println("保存データはありません。");
+        }
+
         while(true) {
             System.out.println("\n=== 住所録アプリ ===");
             System.out.println("1. 登録");
@@ -14,7 +34,8 @@ public class AddressBook {
             System.out.println("3. 検索");
             System.out.println("4. 削除");
             System.out.println("5. 編集");
-            System.out.println("6. 終了");
+            System.out.println("6. 保存");
+            System.out.println("7. 終了");
             System.out.print("番号を選んでください。");
 
             int choice = scanner.nextInt();
@@ -120,6 +141,23 @@ public class AddressBook {
                     System.out.println("更新しました: " + personToEdit);
                     break;
                 case 6:
+                    try (java.io.FileWriter writer = new java.io.FileWriter("addressbook.csv")) {
+                        for (Person person : people) {
+                            writer.write(
+                                person.getId() + "," +
+                                person.getName() + "," +
+                                person.getPhone() + "," +
+                                person.getEmail() + "," +
+                                person.getAddress() + "\n"
+                            );
+                        }
+                        System.out.println("保存しました。");
+                    } catch (Exception exception) {
+                        System.out.println("保存中にエラーが発生しました。" + exception.getMessage());
+                    }
+                    break;
+
+                case 7:
                     System.out.println("終了します。");
                     return;
                 default:
