@@ -11,7 +11,8 @@ public class AddressBook {
             System.out.println("\n=== 住所録アプリ ===");
             System.out.println("1. 登録");
             System.out.println("2. 一覧表示");
-            System.out.println("3. 終了");
+            System.out.println("3. 検索");
+            System.out.println("4. 終了");
             System.out.print("番号を選んでください。");
 
             int choice = scanner.nextInt();
@@ -41,6 +42,22 @@ public class AddressBook {
                     }
                     break;
                 case 3:
+                    System.out.print("検索ワード（名前）を入力してください。");
+                    String keyword = scanner.nextLine();
+                    System.out.println("\n--- 検索結果 ---");
+                    boolean hasFound = false;
+
+                    for (Person person : people) {
+                        if (person.getName().contains(keyword)) {
+                            System.out.println(person);
+                            hasFound = true;
+                        }
+                    }
+
+                    if (!hasFound) System.out.println("該当するデータはありませんでした。");
+                    
+                    break;
+                case 4:
                     System.out.println("終了します。");
                     return;
                 default:
