@@ -7,8 +7,21 @@ addBtn.addEventListener("click", () => {
     if (text === "") return;
 
     const li = document.createElement("li");
-    li.textContent = text;
+    const span = document.createElement("span");
+    const delBtn = document.createElement("button");
 
+    span.textContent = text;
+
+    delBtn.textContent = "✕";
+    delBtn.className = "delete-btn";
+
+    delBtn.addEventListener("click", () => {
+        li.remove();
+    })
+
+    li.appendChild(span);
+    li.appendChild(delBtn);
     list.appendChild(li);
+    
     input.value = "";
 });
