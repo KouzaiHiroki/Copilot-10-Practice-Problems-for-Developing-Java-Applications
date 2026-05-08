@@ -11,6 +11,9 @@ addBtn.addEventListener("click", () => {
     const delBtn = document.createElement("button");
 
     span.textContent = text;
+    span.addEventListener("click", () => {
+        span.classList.toggle("done")
+    })
 
     delBtn.textContent = "✕";
     delBtn.className = "delete-btn";
